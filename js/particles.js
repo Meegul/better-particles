@@ -8,10 +8,16 @@ class Particle {
     this.color = color;
     this.density = density;
   }
+  applyForce(x, y, force) {
+    this.dx += x * force / this.mass;
+    this.dy += y * force / this.mass;
+  }
+  /*
   applyForce(unitVector, force) {
     this.dx += unitVector.x * force / this.mass;
     this.dy += unitVector.y * force / this.mass;
   }
+  */
   move() {
     this.x += this.dx;
     this.y += this.dy;
@@ -40,10 +46,16 @@ class Particles {
   doPhysics() {
     const G = 0.1; //Gravitational Constant
     //Gravity
-    for (let indexA = 0; indexA < this.particles.length; indexA++) {
-      for (let indexB = indexA + 1; indexB < this.particles.length; indexB++) {
-        const particleA = this.particles[indexA];
-        const particleB = this.particles[indexB];
+    for (var indexA = 0; indexA < this.particles.length; indexA++) {
+      for (var indexB = indexA + 1; indexB < this.particles.length; indexB++) {
+        var particleA = this.particles[indexA];
+        var particleB = this.particles[indexB];
+        var distance = distanceBetween(particleA, particleB);
+        if (distance < 0.5)
+          continue;
+        var unitABx = (particleB.x - particleA.x) / distance;
+        var unitABy = (particleB.y - particleA.y) / distance;
+        /*
         const unitAB = getUnitVector({
           x: particleB.x - particleA.x,
           y: particleB.y - particleA.y,
@@ -52,13 +64,10 @@ class Particles {
           x: particleA.x - particleB.x,
           y: particleA.y - particleB.y,
         });
-
-        const distance = distanceBetween(particleA, particleB);
-        const force = (G * particleA.mass * particleB.mass) / distance;
-        if (distance > 0.5) {
-          particleA.applyForce(unitAB, force);
-          particleB.applyForce(unitBA, force);
-        }
+        */
+        var force = (G * particleA.mass * particleB.mass) / distance;
+        particleA.applyForce(unitABx, unitABy, force);
+        particleB.applyForce(unitABx * -1, unitABy * -1, force);
       }
     }
     //Make the moves
@@ -71,7 +80,9 @@ class Particles {
     const brush = this.domObject.getContext("2d");
     brush.font = `${11 * window.devicePixelRatio}px arial`;
     brush.fillStyle = "red";
-    this.particles.forEach((on) => {
+    
+    for (let x = 0; x < this.particles.length; x++) {
+      const on = this.particles[x];
       brush.beginPath();
       brush.arc(on.x, on.y, on.mass*10/on.density, 0, Math.PI*2);
       brush.fillStyle = on.color;
@@ -81,7 +92,7 @@ class Particles {
         const locy = on.y - on.mass*10 - 5;
         brush.fillText(`(${Math.trunc(on.x)},${Math.trunc(on.y)}),<${Math.trunc(on.dx * 100) / 100},${Math.trunc(on.dy * 100) / 100}>`, locx, locy);
       }
-    });
+    }
     if (this.interactive && this.clicked) {
       console.log("Drawing Line!");
       brush.strokeStyle = "white";
@@ -188,11 +199,11 @@ function getMousePos(domObject, event) {
 }
 
 function distanceBetween(a, b) {
-  return Math.sqrt((a.x - b.x)**2 + (a.y - b.y)**2);
+  return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
 }
 
 function getUnitVector(vector) {
-  const magnitude = Math.sqrt(vector.x ** 2 + vector.y ** 2);
+  const magnitude = Math.sqrt(vector.x * vector.x + vector.y * vector.y );
   return {
     x: vector.x / magnitude,
     y: vector.y / magnitude,
