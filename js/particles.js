@@ -30,6 +30,7 @@ class Particles {
     this.clickPos = undefined;
     this.mousePos = undefined;
     this.clicked = false;
+    this.timeClicked = undefined;
     this.domObject.addEventListener("mousedown", this.handleMouseDown.bind(this));
     this.domObject.addEventListener("mousemove", this.handleMouseMove.bind(this));
     this.domObject.addEventListener("mouseup", this.handleMouseUp.bind(this));
@@ -89,6 +90,10 @@ class Particles {
       brush.moveTo(this.clickPos.x, this.clickPos.y);
       brush.lineTo(this.mousePos.x, this.mousePos.y);
       brush.stroke();
+      brush.beginPath();
+      brush.fillStyle = "white";
+      brush.arc(this.clickPos.x, this.clickPos.y, (new Date().getTime() - this.timeClicked) / 50, 0, Math.PI*2);
+      brush.fill();
     }
   }
   run() {
@@ -132,6 +137,7 @@ class Particles {
     if (this.interactive) {
       this.clickPos = getMousePos(this.domObject, event);
       this.clicked = true;
+      this.timeClicked = new Date().getTime();
       console.log(`Mouse down at:(${this.clickPos.x},${this.clickPos.y})`);
     }
   }
@@ -139,9 +145,10 @@ class Particles {
     if (this.interactive) {
       this.clicked = false;
       console.log(`Mouse up at:(${this.mousePos.x},${this.mousePos.y})`);
+      const mass = (new Date().getTime() - this.timeClicked) / 500;
       const dx = (this.mousePos.x - this.clickPos.x) / 500;
       const dy = (this.mousePos.y - this.clickPos.y) / 500;
-      const newParticle = new Particle(this.clickPos.x, this.clickPos.y, dx, dy);
+      const newParticle = new Particle(this.clickPos.x, this.clickPos.y, dx, dy, mass);
       this.particles.push(newParticle);
     }
   }
