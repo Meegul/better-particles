@@ -18,13 +18,14 @@ class Particle {
 }
 
 class Particles {
-  constructor(number = 10, domObject, debug = false) {
+  constructor(number = 10, domObject, debug = false, frameTime = false) {
     if (!domObject)
       return;
     this.particles = new Array(number).fill(0).map(() => new Particle(250, 250));
     this.domObject = domObject;
     this.running = false;
     this.debug = debug;
+    this.frameTime = frameTime;
   }
   doPhysics() {
     const G = 0.1; //Gravitational Constant
@@ -58,6 +59,7 @@ class Particles {
     this.domObject.getContext("2d").clearRect(0, 0, this.domObject.width, this.domObject.height);
     //Draw
     const brush = this.domObject.getContext("2d");
+    brush.font = `${11 * window.devicePixelRatio}px arial`;
     brush.fillStyle = "red";
     this.particles.forEach((on) => {
       brush.beginPath();
@@ -65,8 +67,8 @@ class Particles {
       brush.fillStyle = on.color;
       brush.fill();
       if (this.debug) {
-        const locx = on.x - 30;
-        const locy = on.y - on.mass*10 - 2;
+        const locx = on.x - (5*11*window.devicePixelRatio);
+        const locy = on.y - on.mass*10 - 5;
         brush.fillText(`(${Math.trunc(on.x)},${Math.trunc(on.y)}),<${Math.trunc(on.dx * 100) / 100},${Math.trunc(on.dy * 100) / 100}>`, locx, locy);
       }
     });
@@ -74,15 +76,19 @@ class Particles {
   run() {
     if (this.running) {
       let physicsStart, physicsEnd, renderEnd;
-      if (this.debug)
+      if (this.frameTime)
         physicsStart = new Date().getTime();
       this.doPhysics();
-      if (this.debug)
+      if (this.frameTime)
         physicsEnd = new Date().getTime();
       this.render();
-      if (this.debug) {
+      if (this.frameTime) {
         renderEnd = new Date().getTime();
-        canvas.getContext("2d").fillText(`Physics:${physicsEnd - physicsStart}ms|Render:${renderEnd - physicsEnd}`, 0, 20);
+        const brush = canvas.getContext("2d");
+        brush.font = `${11 * window.devicePixelRatio}px arial`;
+        brush.fillStyle = "white";
+        canvas.getContext("2d").fillText(`Physics:${physicsEnd - physicsStart}ms`, 0, 20);
+        canvas.getContext("2d").fillText(`Render:${renderEnd - physicsEnd}ms`, 0, 20 + 11 * window.devicePixelRatio);
       }
       requestAnimationFrame(this.run.bind(this));
     }
@@ -97,6 +103,12 @@ class Particles {
       this.running = true;
       this.run();
     }
+  }
+  toggleDebug() {
+    this.debug = !this.debug;
+  }
+  toggleFrameTime() {
+    this.frameTime = !this.frameTime;
   }
 }
 
