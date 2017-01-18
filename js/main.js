@@ -1,5 +1,5 @@
 const canvas = document.getElementById("particles");
-const particles = new Particles(1, canvas, false);
+let particles;
 
 function toggle() {
   particles.rendering = !particles.rendering;
@@ -7,7 +7,7 @@ function toggle() {
 
 function init() {
   resize();
-  orbittingBodies();
+  particles = new Particles(100, canvas, false);
   particles.togglePause();
   particles.run();
 }
@@ -33,20 +33,7 @@ function oppositeCorners() {
 function randomize() {
   const numRandomValue = document.getElementById("num-random").value;
   const number = parseInt(numRandomValue) ? parseInt(numRandomValue) : 250;
-  const newParticles = [];
-  for (let x = 0; x < number; x++) {
-    const randx = Math.random() * canvas.width;
-    const randy = Math.random() * canvas.height;
-    const randdx = Math.random() * 2 - 1;
-    const randdy = Math.random() * 2 - 1;
-    const randMass = Math.random() * 5;
-    const r = parseInt((Math.random() * 16 * 16)).toString(16);
-    const g = parseInt((Math.random() * 16 * 16)).toString(16);
-    const b = parseInt((Math.random() * 16 * 16)).toString(16);
-    const rgb = `#${r}${g}${b}`;
-    newParticles[x] = new Particle(randx, randy, randdx, randdy, randMass, rgb);
-  }
-  particles.setParticles(newParticles);
+  particles.randomize(number);
 }
 
 function toggleDebug() {

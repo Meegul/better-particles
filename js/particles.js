@@ -33,6 +33,7 @@ class Particles {
     this.domObject.addEventListener("mousedown", this.handleMouseDown.bind(this));
     this.domObject.addEventListener("mousemove", this.handleMouseMove.bind(this));
     this.domObject.addEventListener("mouseup", this.handleMouseUp.bind(this));
+    this.randomize(number);
   }
   doPhysics() {
     const G = 0.1; //Gravitational Constant
@@ -151,6 +152,22 @@ class Particles {
   }
   clear() {
     this.particles = [];
+  }
+  randomize(number = 10) {
+    const newParticles = [];
+    for (let x = 0; x < number; x++) {
+      const randx = Math.random() * canvas.width;
+      const randy = Math.random() * canvas.height;
+      const randdx = Math.random() * 2 - 1;
+      const randdy = Math.random() * 2 - 1;
+      const randMass = Math.random() * 5;
+      const r = parseInt((Math.random() * 16 * 16)).toString(16);
+      const g = parseInt((Math.random() * 16 * 16)).toString(16);
+      const b = parseInt((Math.random() * 16 * 16)).toString(16);
+      const rgb = `#${r}${g}${b}`;
+      newParticles[x] = new Particle(randx, randy, randdx, randdy, randMass, rgb);
+    }
+    this.setParticles(newParticles);
   }
 }
 
