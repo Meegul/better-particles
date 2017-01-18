@@ -149,6 +149,9 @@ class Particles {
       this.mousePos = getMousePos(this.domObject, event);
     }
   }
+  clear() {
+    this.particles = [];
+  }
 }
 
 function getMousePos(domObject, event) {
