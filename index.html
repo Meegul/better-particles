@@ -7,7 +7,10 @@
         <div class="button" onclick="particles.togglePause()">Toggle Pause</div>
         <div class="button" onclick="orbittingBodies()">Orbitting Bodies</div>
         <div class="button" onclick="oppositeCorners()">Opposite Corners</div>
-        <div class="button" onclick="randomize()">250 Random Particles</div>
+        <div class="combined-input">
+            <input type="text" id="num-random" value=250></input>
+            <div class="button" onclick="randomize()">Random Particles</div>
+        </div>
         <div class="button" onclick="toggleDebug()">Toggle Debug Mode</div>
     </div>
     <canvas id="particles"></canvas>

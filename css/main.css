@@ -29,3 +29,12 @@ html body {
 .button:hover {
     color: #FF0000;
 }
+
+.combined-input {
+    display: flex;
+    flex-direction: row;
+}
+
+.combined-input > input {
+    width: 100%;
+}

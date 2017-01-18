@@ -31,8 +31,10 @@ function oppositeCorners() {
 }
 
 function randomize() {
+  const numRandomValue = document.getElementById("num-random").value;
+  const number = parseInt(numRandomValue) ? parseInt(numRandomValue) : 250;
   const newParticles = [];
-  for (let x = 0; x < 250; x++) {
+  for (let x = 0; x < number; x++) {
     const randx = Math.random() * canvas.width;
     const randy = Math.random() * canvas.height;
     const randdx = Math.random() * 2 - 1;
