@@ -1,11 +1,12 @@
 class Particle {
-  constructor(x = 0, y = 0, dx = 0, dy = 0, mass = 1, color = "#FFFFFF") {
+  constructor(x = 0, y = 0, dx = 0, dy = 0, mass = 1, color = "#FFFFFF", density = 1) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.mass = mass;
     this.color = color;
+    this.density = density;
   }
   applyForce(unitVector, force) {
     this.dx += unitVector.x * force / this.mass;
@@ -72,7 +73,7 @@ class Particles {
     brush.fillStyle = "red";
     this.particles.forEach((on) => {
       brush.beginPath();
-      brush.arc(on.x, on.y, on.mass*10, 0, Math.PI*2);
+      brush.arc(on.x, on.y, on.mass*10/on.density, 0, Math.PI*2);
       brush.fillStyle = on.color;
       brush.fill();
       if (this.debug) {
