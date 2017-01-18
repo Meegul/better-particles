@@ -18,7 +18,7 @@ class Particle {
 }
 
 class Particles {
-  constructor(number = 10, domObject, debug = false, frameTime = false) {
+  constructor(number = 10, domObject, debug = false, frameTime = false, interactive = true) {
     if (!domObject)
       return;
     this.particles = new Array(number).fill(0).map(() => new Particle(250, 250));
@@ -26,6 +26,13 @@ class Particles {
     this.running = false;
     this.debug = debug;
     this.frameTime = frameTime;
+    this.interactive = interactive;
+    this.clickPos = undefined;
+    this.mousePos = undefined;
+    this.clicked = false;
+    this.domObject.addEventListener("mousedown", this.handleMouseDown.bind(this));
+    this.domObject.addEventListener("mousemove", this.handleMouseMove.bind(this));
+    this.domObject.addEventListener("mouseup", this.handleMouseUp.bind(this));
   }
   doPhysics() {
     const G = 0.1; //Gravitational Constant
@@ -72,6 +79,16 @@ class Particles {
         brush.fillText(`(${Math.trunc(on.x)},${Math.trunc(on.y)}),<${Math.trunc(on.dx * 100) / 100},${Math.trunc(on.dy * 100) / 100}>`, locx, locy);
       }
     });
+    if (this.interactive && this.clicked) {
+      console.log("Drawing Line!");
+      brush.strokeStyle = "white";
+      brush.lineWidth = 5 * window.devicePixelRatio;
+      brush.stroke
+      brush.beginPath();
+      brush.moveTo(this.clickPos.x, this.clickPos.y);
+      brush.lineTo(this.mousePos.x, this.mousePos.y);
+      brush.stroke();
+    }
   }
   run() {
     if (this.running) {
@@ -110,6 +127,36 @@ class Particles {
   toggleFrameTime() {
     this.frameTime = !this.frameTime;
   }
+  handleMouseDown(event) {
+    if (this.interactive) {
+      this.clickPos = getMousePos(this.domObject, event);
+      this.clicked = true;
+      console.log(`Mouse down at:(${this.clickPos.x},${this.clickPos.y})`);
+    }
+  }
+  handleMouseUp() {
+    if (this.interactive) {
+      this.clicked = false;
+      console.log(`Mouse up at:(${this.mousePos.x},${this.mousePos.y})`);
+      const dx = (this.mousePos.x - this.clickPos.x) / 500;
+      const dy = (this.mousePos.y - this.clickPos.y) / 500;
+      const newParticle = new Particle(this.clickPos.x, this.clickPos.y, dx, dy);
+      this.particles.push(newParticle);
+    }
+  }
+  handleMouseMove(event) {
+    if (this.interactive) {
+      this.mousePos = getMousePos(this.domObject, event);
+    }
+  }
+}
+
+function getMousePos(domObject, event) {
+  const rect = domObject.getBoundingClientRect();
+  return {
+    x: (event.clientX - rect.left) * window.devicePixelRatio,
+    y: (event.clientY - rect.top) * window.devicePixelRatio,
+  };
 }
 
 function distanceBetween(a, b) {
