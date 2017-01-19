@@ -6,10 +6,17 @@ function toggle() {
 }
 
 function init() {
-  resize();
-  particles = new Particles(100, canvas, false);
-  particles.togglePause();
-  particles.run();
+  const particlesConfig = {
+    domObject: canvas,
+    gravity: true,
+    walls: false,
+    falling: false,
+    teleportWalls: false,
+    number: 250,
+    backgroundRGBA: "rgba(0,0,0,1)",
+  };
+  particles = new Particles(particlesConfig);
+  particles.start();
 }
 
 function resize() {
