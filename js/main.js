@@ -13,6 +13,7 @@ function init() {
     falling: false,
     teleportWalls: false,
     number: 250,
+    terminalVelocity: 10000,
     backgroundRGBA: "rgba(0,0,0,1)",
   };
   particles = new Particles(particlesConfig);
