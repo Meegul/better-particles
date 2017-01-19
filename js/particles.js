@@ -1,5 +1,5 @@
 class Particle {
-  constructor(x = 0, y = 0, dx = 0, dy = 0, mass = 1, color = "#FFFFFF", density = 1, terminalVelocity = 10) {
+  constructor(x = 0, y = 0, dx = 0, dy = 0, mass = 1, color = "#FFFFFF", density = 1, terminalVelocity = 100000) {
     this.x = x;
     this.y = y;
     this.dx = dx;
