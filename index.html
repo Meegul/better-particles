@@ -4,18 +4,18 @@
 </head>
 <body>
     <div class="header">
-        <div class="button" onclick="particles.togglePause()">Toggle Pause</div>
-        <div class="button" onclick="orbittingBodies()">Orbitting Bodies</div>
-        <div class="button" onclick="oppositeCorners()">Opposite Corners</div>
-        <div class="button" onclick="blackHole()">Black Hole</div>
-        <div class="button" onclick="solarSystem()">Solar System</div>
-        <div class="button" onclick="particles.clear()">Clear</div>
-        <div class="combined-input">
-            <input type="text" id="num-random" value=250></input>
-            <div class="button" onclick="randomize()">Random Particles</div>
-        </div>
+        <div class="button" onclick="particles.togglePause()">Pause/Resume</div>
+        <div class="button" onclick="particles.clear()">Clear Particles</div>
         <div class="button" onclick="particles.toggleDebug()">Toggle Debug Mode</div>
         <div class="button" onclick="particles.toggleFrameTime()">Toggle Frame-time Counter</div>
+        <div class="button" onclick="particles.toggleInteractivity()">Toggle Interactivity</div>
+        <div class="button" onclick="blackHole()">Black Hole</div>
+        <div class="button" onclick="solarSystem()">Solar System</div>
+        <div class="button" onclick="lattice()">Lattice</div>
+        <div class="combined-input">
+            <input type="text" id="num-random" value=250></input>
+            <div class="button" onclick="randomize()">Add # Random Particles</div>
+        </div>
     </div>
     <canvas id="particles"></canvas>
     <script src="js/particles.js"></script>
