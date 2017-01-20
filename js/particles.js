@@ -333,7 +333,7 @@ class Particles {
       snow: {
         walled: true,
         particleColor: "rgba(255,255,255,0.8)",
-        backgroundColor: "rgb(0,0,0)",
+        backgroundColor: "rgba(0,0,0,0)",
         terminalVelocity: 5,
         random: {
           number: 100,
@@ -376,7 +376,7 @@ class Particles {
         gravity: false,
         falling: false,
         teleportWalls: true,
-        backgroundColor: "rgb(0,0,0)",
+        backgroundColor: "rgba(0,0,0,0)",
         particleColor: "rgb(255,255,255)",
         connected: true,
         random: {
