@@ -38,6 +38,15 @@ The following configs are currently available:
 * `solarSystem` - A mock solar system in which planets orbit a sun.
 * `blackHole` - A more extreme gravitational example; a planet orbits a very dense particle.
 
+You can start with one of the default configs and change some of it's settings, as well. For example, if we wanted to make the snow config interactive, we could just do the following:
+```javascript
+const mySnow = Particles.configs().snow;
+mySnow.interactive = true;
+const myParticleObject = new Particles(mySnow, canvas);
+```
+
+Take a look at some of the different parameters below to see what kind of changes you can make.
+
 ## Advanced setup
 If you'd like to pass your own parameters, you can pass any/all of the following in an object:
 * `gravity` - `true` or `false` - Whether particles should be attracted to one another, based on their mass and distance.
