@@ -52,7 +52,7 @@ class Particle {
 }
 
 class Particles {
-  //The constructor. Must received an object with parameters.
+  //The constructor. Must receive an object with parameters.
   //A canvas object must be supplied either in the object or as a second parameter.
   constructor(paramsObject, domObject) {
     //Make sure we got a domObject
