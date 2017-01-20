@@ -59,8 +59,7 @@ class Particles {
     if (!paramsObject.domObject)
       paramsObject.domObject = domObject;
     if (!paramsObject.domObject) {
-      console.log("Missing domObject");
-      return;
+      throw new Error("Missing dom object");
     }
     this.domObject = paramsObject.domObject;
     this.debug = paramsObject.debug || false;
