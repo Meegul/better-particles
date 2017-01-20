@@ -273,6 +273,7 @@ class Particles {
         brush.fillStyle = "white";
         brush.fillText(`Physics:${physicsEnd - physicsStart}ms`, 0, 20);
         brush.fillText(`Render:${renderEnd - physicsEnd}ms`, 0, 20 + 11 * window.devicePixelRatio);
+        brush.fillText(`Particles:${this.particles.length}`, 0, 20 + 11 * 2 * window.devicePixelRatio);
       }
       requestAnimationFrame(this.run.bind(this));
     }
