@@ -5,7 +5,7 @@ A simple, better particles library for web use. It includes simulated gravity be
 better-particles performs really, really well. In testing on a 2015 MacBook Pro, better-particles could simulate 1000 particles *with gravitational forces between each one* at 60fps. Additionally, the non-minified file is only 14.2kB, ensuring quick load times. 
 
 ## Basic setup
-1. Include `better-particles.js`:
+1. Include `better-particles.js` or the minified version ran through babel, `better-particles.min.js`, both from the `out` folder in this repository:
 
   ```html
   <script src="js/better-particles.js"></script>
