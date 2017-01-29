@@ -1,0 +1,27 @@
+{
+  "name": "better-particles",
+  "version": "0.1.0",
+  "description": "A better particles library for the web.",
+  "main": "out/better-particles.js",
+  "scripts": {
+    "build": "./node_modules/babel-cli/bin/babel.js src/better-particles.js -o ./out/better-particles.min.js --presets=babili && cp ./src/better-particles.js ./out/better-particles.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meegul/better-particles.git"
+  },
+  "author": "Meegul",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Meegul/better-particles/issues"
+  },
+  "homepage": "https://github.com/Meegul/better-particles#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-preset-babili": "0.0.10",
+    "babel-preset-env": "^1.1.8",
+    "babili": "0.0.10"
+  }
+}
