@@ -54,6 +54,7 @@ If you'd like to pass your own parameters, you can pass any/all of the following
 * `walled` - `true` or `false` - Whether particles should be bound by the canvas, bouncing off the walls.
 * `teleportWalls` - `true` or `false` - Whether particles should just teleport to the other side of the canvas when they collide with a wall and `walled` is set to `true`.
 * `connected` - `true` or `false` - Whether lines should be drawn between particles near one-another.
+* `latticeDistance` - Any number > 0 - The maximum distance for a line to be drawn between particles.
 * `terminalVelocity` - Any number > 0 - The fastest speed particles can travel.
 * `particleColor` - A valid CSS color string (`rgb(255,255,255)`, `#FFF`, etc) - The color of any new particles.
 * `domObject` - A canvas DOM object- The canvas on which the particle simulation should take place. This can either be passed in your parameters object here, or as another parameter to the constructor.
@@ -61,6 +62,11 @@ If you'd like to pass your own parameters, you can pass any/all of the following
   * `number` - Any number > 0 - The number of particles to be created.
   * `minMass` - Any number > 0 - The minimum mass of a created particle.
   * `maxMass` - Any number > 0 - The maximum mass of a created particle.
+  * `minDx` - Any number - The minimum velocity in the x direction of a created particle.
+  * `maxDx` - Any number - The maximum velocity in the x direction a created particle.
+  * `minDy` - Any number - The minimum velocity in the y direction created particle.
+  * `maxDx` - Any number - The maximum velocity in the y direction a created particle.
+  * `color` - Any valid CSS color string - The color of new particles generated. Defaults to `object.particleColor`, or a random color if that is not provided either.
 * `particles` - An array containing any amount of `Particle` objects - The particles which will be added on construction, whether or not random particles are also being generated.
 * `debug` - `true` or `false` - Shows extra information about particle location and mouse location.
 * `frameTime` - `true` or `false` - Adds an overlay to the top left that shows the time it takes to complete the physics and rendering operations for each frame.
