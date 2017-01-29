@@ -62,14 +62,12 @@ class Particles {
       throw new Error("Missing dom object");
     }
     this.domObject = paramsObject.domObject; //The canvas
-    this.debug = paramsObject.debug || false; //Debug mode
-    this.frameTime = paramsObject.frameTime || false; //Frame-time overlay
     this.interactive = paramsObject.interactive || false; //Whether to track mouse interactions
     this.repel = paramsObject.repel || false; //Whether to have the mouse repel particles
     if (this.repel && !this.interactive) {
       console.log("You specified to have particles replled by the mouse without interactivity");
     }
-    this.clickToAdd = paramsObject.clickToAdd || false;
+    this.clickToAdd = paramsObject.clickToAdd || false; //Whether clicking should create a new particle
     if (this.clickToAdd && !this.interactive) {
       console.log("You specified to be able to click to add particles, but without interactivity enabled");
     }
@@ -84,6 +82,11 @@ class Particles {
     this.particleColor = (paramsObject.particleColor) ? paramsObject.particleColor : undefined;
     this.particles = (paramsObject.particles) ? paramsObject.particles : [];
     this.connected = paramsObject.connected || false;
+    this.latticeDistance = (paramsObject.latticeDistance) ? paramsObject.latticeDistance : 250;
+
+    this.debug = paramsObject.debug || false; //Debug mode
+    this.frameTime = paramsObject.frameTime || false; //Frame-time overlay
+    this.linesDrawn = 0; //Number of lines drawn in a single frame, used for frame-time overlay.
     this.clickPos = undefined;
     this.mousePos = {
       x: 0,
@@ -91,6 +94,7 @@ class Particles {
     };
     this.clicked = false;
     this.timeClicked = undefined;
+
     //Initialize the canvas dimensions, adjusting for dpi
     this.domObject.width = this.domObject.offsetWidth * window.devicePixelRatio;
     this.domObject.height = this.domObject.offsetHeight * window.devicePixelRatio;
@@ -198,6 +202,7 @@ class Particles {
   render() {
     //Clear
     this.domObject.getContext("2d").clearRect(0, 0, this.domObject.width, this.domObject.height);
+    this.linesDrawn = 0;
 
     const brush = this.domObject.getContext("2d");
     brush.font = `${11 * window.devicePixelRatio}px arial`;
@@ -210,8 +215,9 @@ class Particles {
         for (var indexB = indexA + 1; indexB < this.particles.length; indexB++) {
           particleB = this.particles[indexB];
           distance = distanceBetween(particleA, particleB);
-          if (distance < 250) {
-            alpha = -distance/250 + 1;
+          if (distance < this.latticeDistance) {
+            this.linesDrawn++;
+            alpha = -distance/this.latticeDistance + 1;
             brush.strokeStyle = `rgba(255,255,255,${alpha})`;
             brush.beginPath();
             brush.moveTo(particleA.x, particleA.y);
@@ -274,6 +280,7 @@ class Particles {
         brush.fillText(`Physics:${physicsEnd - physicsStart}ms`, 0, 20);
         brush.fillText(`Render:${renderEnd - physicsEnd}ms`, 0, 20 + 11 * window.devicePixelRatio);
         brush.fillText(`Particles:${this.particles.length}`, 0, 20 + 11 * 2 * window.devicePixelRatio);
+        brush.fillText(`Lines Drawn:${this.linesDrawn}`, 0, 20 + 11 * 3 * window.devicePixelRatio);
       }
       requestAnimationFrame(this.run.bind(this));
     }
@@ -355,26 +362,49 @@ class Particles {
       this.randomize({});
       return;
     }
+    //How many new particles to generate. Default 10.
     const number = (options.number) ? options.number : 10;
+
+    //Whether the randomization should clear old particles before adding new ones. Default false.
+    const clear = options.clear || false;
+
+    //Minimum mass of a particle. Default 1.
     const minMass = (options.minMass) ? options.minMass : 1;
+    //Maximum mass of a particle. Default 5.
     const maxMass = (options.maxMass) ? options.maxMass : 5;
+
+    //Minimum Dx. Default -1.
+    const minDx = (options.minDx) ? options.minDx : -1;
+    //Maximum Dx. Default 1.
+    const maxDx = (options.maxDx) ? options.maxDx : 1;
+    //Minimum Dy. Default -1.
+    const minDy = (options.minDy) ? options.minDy : -1;
+    //Maximum Dy. Default 1.
+    const maxDy = (options.maxDy) ? options.maxDy : 1;
+
+    //Color of random particles. Defaults to object's particleColor, and if that's not there, defaults to a random color.
+    const newColor = (options.color) ? options.color : this.particleColor;
     const newParticles = [];
-    for (let x = 0; x < number; x++) {
+    for (var x = 0; x < number; x++) {
       const randx = Math.random() * this.domObject.width;
       const randy = Math.random() * this.domObject.height;
-      const randdx = Math.random() * 2 - 1;
-      const randdy = Math.random() * 2 - 1;
+      const randdx = Math.random() * (maxDx - minDx) + minDx;
+      const randdy = Math.random() * (maxDy - minDy) + minDy;
       const randMass = Math.random() * (maxMass - minMass) + minMass;
       let color;
-      if (!this.particleColor) {
+      if (!newColor) {
         const r = parseInt(Math.random() * 255);
         const g = parseInt(Math.random() * 255);
         const b = parseInt(Math.random() * 255);
         color = `rgb(${r},${g},${b})`;
       } else {
-        color = this.particleColor;
+        color = newColor;
       }
       newParticles[x] = new Particle(randx, randy, randdx, randdy, randMass, color, 1, this.terminalVelocity);
+    }
+    //Remove all other particles before adding, if specified.
+    if (clear) {
+      this.clear();
     }
     this.addParticles(newParticles);
   }
@@ -431,15 +461,20 @@ class Particles {
         teleportWalls: true,
         interactive: true,
         repel: true,
+        latticeDistance: 400,
         clickToAdd: false,
         backgroundColor: "rgba(0,0,0,0)",
         particleColor: "rgb(255,255,255)",
         connected: true,
-        terminalVelocity: 3,
+        terminalVelocity: 0.5,
         random: {
-          number: 50,
-          minMass: 1,
-          maxMass: 1,
+          number: 75,
+          minMass: 0.5,
+          maxMass: 0.5,
+          minDx: -0.5,
+          maxDx: 0.5,
+          minDy: -0.5,
+          maxDy: 0.5,
         },
       },
     };
