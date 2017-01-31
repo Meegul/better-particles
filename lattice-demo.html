@@ -1,0 +1,25 @@
+<head>
+    <title>better-particles lattice</title>
+    <link rel="stylesheet" href="css/lattice-demo.css">
+</head>
+<body>
+    <div class="wrapper">
+        <canvas id="particles-canvas">No canvas!</canvas>
+        <div class="settings">
+            <div class="setting" oninput="updateLatticeWidth()">
+                <a>Lattice Width: </a>
+                <input id="lattice-width" type="number" value="5" min="0">
+            </div>
+            <div class="setting" oninput="updateLatticeDistance()">
+                <a>Lattice Distance: </a>
+                <input id="lattice-distance" type="number" value="200" min="0">
+            </div>
+            <div class="setting" onclick="updateGravity()">
+                <a>Gravity: </a>
+                <input id="gravity" type="checkbox" value="gravity">
+            </div>
+        </div>
+    </div>
+    <script src="src/better-particles.js"></script>
+    <script src="src/latticeDemo.js"></script>
+</body>

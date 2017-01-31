@@ -83,6 +83,7 @@ class Particles {
     this.particles = (paramsObject.particles) ? paramsObject.particles : [];
     this.connected = paramsObject.connected || false;
     this.latticeDistance = (paramsObject.latticeDistance) ? paramsObject.latticeDistance : 250;
+    this.latticeWidth = (paramsObject.latticeWidth) ? paramsObject.latticeWidth : 5;
 
     this.debug = paramsObject.debug || false; //Debug mode
     this.frameTime = paramsObject.frameTime || false; //Frame-time overlay
@@ -209,7 +210,7 @@ class Particles {
     brush.font = `${11 * window.devicePixelRatio}px arial`;
     //Draw lattice, if specified
     if (this.connected) {
-      brush.lineWidth = 5;
+      brush.lineWidth = this.latticeWidth;
       let distance, particleA, particleB, alpha
       for (var indexA = 0; indexA < this.particles.length; indexA++) {
         particleA = this.particles[indexA];
@@ -415,7 +416,6 @@ class Particles {
       snow: {
         walled: true,
         particleColor: "rgba(255,255,255,0.8)",
-        backgroundColor: "rgba(0,0,0,0)",
         terminalVelocity: 5,
         random: {
           number: 100,
@@ -463,8 +463,8 @@ class Particles {
         interactive: true,
         repel: true,
         latticeDistance: 400,
+        latticeWidth: 5,
         clickToAdd: false,
-        backgroundColor: "rgba(0,0,0,0)",
         particleColor: "rgb(255,255,255)",
         connected: true,
         terminalVelocity: 0.5,

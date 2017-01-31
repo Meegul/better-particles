@@ -1,0 +1,34 @@
+html body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: arial, sans-serif;
+    background: white;
+    color: black;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+}
+
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    flex: 1 0 auto;
+}
+
+.setting {
+    display: inline-block;
+}
+
+#particles-canvas {
+    flex: 1 0 auto;
+    background: black;
+}

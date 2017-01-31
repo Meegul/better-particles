@@ -99,7 +99,8 @@ class Particles {
     this.domObject.width = this.domObject.offsetWidth * window.devicePixelRatio;
     this.domObject.height = this.domObject.offsetHeight * window.devicePixelRatio;
 
-    this.domObject.style.background = (paramsObject.backgroundColor) ? paramsObject.backgroundColor : "rgb(255,255,255)";
+    if (paramsObject.backgroundColor)
+      this.domObject.style.background = paramsObject.backgroundColor;
     this.domObject.addEventListener("mousedown", this.handleMouseDown.bind(this));
     this.domObject.addEventListener("mousemove", this.handleMouseMove.bind(this));
     this.domObject.addEventListener("mouseup", this.handleMouseUp.bind(this));
@@ -414,7 +415,6 @@ class Particles {
       snow: {
         walled: true,
         particleColor: "rgba(255,255,255,0.8)",
-        backgroundColor: "rgba(0,0,0,0)",
         terminalVelocity: 5,
         random: {
           number: 100,
@@ -463,7 +463,6 @@ class Particles {
         repel: true,
         latticeDistance: 400,
         clickToAdd: false,
-        backgroundColor: "rgba(0,0,0,0)",
         particleColor: "rgb(255,255,255)",
         connected: true,
         terminalVelocity: 0.5,
