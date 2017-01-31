@@ -99,7 +99,8 @@ class Particles {
     this.domObject.width = this.domObject.offsetWidth * window.devicePixelRatio;
     this.domObject.height = this.domObject.offsetHeight * window.devicePixelRatio;
 
-    this.domObject.style.background = (paramsObject.backgroundColor) ? paramsObject.backgroundColor : "rgb(255,255,255)";
+    if (paramsObject.backgroundColor)
+      this.domObject.style.background = paramsObject.backgroundColor;
     this.domObject.addEventListener("mousedown", this.handleMouseDown.bind(this));
     this.domObject.addEventListener("mousemove", this.handleMouseMove.bind(this));
     this.domObject.addEventListener("mouseup", this.handleMouseUp.bind(this));
