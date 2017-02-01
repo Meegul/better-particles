@@ -32,6 +32,21 @@ function updateFalling() {
     particleObject.falling = falling;
 }
 
+function updateWalled() {
+    const walled = document.getElementById("walled").checked;
+    if (walled) {
+        document.getElementById("teleport-walls").parentElement.className = "setting";
+    } else {
+        document.getElementById("teleport-walls").parentElement.className = "setting disabled";
+    }
+    particleObject.walled = walled;
+}
+
+function updateTeleportWalls() {
+    const teleportWalls = document.getElementById("teleport-walls").checked;
+    particleObject.teleportWalls = teleportWalls;
+}
+
 function updateConnected() {
     const connected = document.getElementById("connected").checked;
     particleObject.connected = connected;
