@@ -38,10 +38,11 @@ The following configs are currently available:
 * `solarSystem` - A mock solar system in which planets orbit a sun.
 * `blackHole` - A more extreme gravitational example; a planet orbits a very dense particle.
 
-You can start with one of the default configs and change some of it's settings, as well. For example, if we wanted to make the snow config interactive, we could just do the following:
+You can start with one of the default configs and change some of it's settings, as well. For example, if we wanted to make the snow config interactive and have the mouse repel particles, we could just do the following:
 ```javascript
 const mySnow = Particles.configs().snow;
 mySnow.interactive = true;
+mySnow.repel = true;
 const myParticleObject = new Particles(mySnow, canvas);
 ```
 
@@ -55,6 +56,7 @@ If you'd like to pass your own parameters, you can pass any/all of the following
 * `teleportWalls` - `true` or `false` - Whether particles should just teleport to the other side of the canvas when they collide with a wall and `walled` is set to `true`.
 * `connected` - `true` or `false` - Whether lines should be drawn between particles near one-another.
 * `latticeDistance` - Any number > 0 - The maximum distance for a line to be drawn between particles.
+* `latticeWidth` - Any number > 0 - The width of lines drawn between particles.
 * `terminalVelocity` - Any number > 0 - The fastest speed particles can travel.
 * `particleColor` - A valid CSS color string (`rgb(255,255,255)`, `#FFF`, etc) - The color of any new particles.
 * `domObject` - A canvas DOM object- The canvas on which the particle simulation should take place. This can either be passed in your parameters object here, or as another parameter to the constructor.
@@ -71,3 +73,5 @@ If you'd like to pass your own parameters, you can pass any/all of the following
 * `debug` - `true` or `false` - Shows extra information about particle location and mouse location.
 * `frameTime` - `true` or `false` - Adds an overlay to the top left that shows the time it takes to complete the physics and rendering operations for each frame.
 * `interactive` - `true` or `false` - Enables the ability for the user to click, hold, and drag in order to create new particles.
+* `repel` - `true` or `false` - Makes the mouse repel particles away from it, if interactivity is enabled.
+* `clickToAdd` - `true` or `false` - Allows the user to create new particles by clicking and dragging, if interactivity is enabled.
