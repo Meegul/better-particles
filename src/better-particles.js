@@ -342,7 +342,7 @@ class Particles {
         const dx = (this.mousePos.x - this.clickPos.x) / 500;
         const dy = (this.mousePos.y - this.clickPos.y) / 500;
         const newParticle = new Particle(this.clickPos.x, this.clickPos.y, dx, dy, mass, this.particleColor, 1, this.terminalVelocity);
-        this.particles.push(newParticle);
+        this.addParticles([newParticle]);
       }
     }
   }
