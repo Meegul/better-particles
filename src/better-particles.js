@@ -35,14 +35,11 @@ class Particle {
   applyForce(x, y, force) {
     this.dx += x * force / this.mass;
     this.dy += y * force / this.mass;
-    if (this.dx > this.terminalVelocity)
-      this.dx = this.terminalVelocity;
-    if (this.dy > this.terminalVelocity)
-      this.dy = this.terminalVelocity;
-    if (this.dx < -this.terminalVelocity)
-      this.dx = -this.terminalVelocity;
-    if (this.dy < -this.terminalVelocity)
-      this.dy = -this.terminalVelocity;
+    const speed = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+    if (speed > this.terminalVelocity) {
+      this.dx *= this.terminalVelocity / speed;
+      this.dy *= this.terminalVelocity / speed;
+    }
   }
   //Update the location of the particle, based on the current velocity vector
   move() {
