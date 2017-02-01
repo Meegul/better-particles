@@ -35,14 +35,11 @@ class Particle {
   applyForce(x, y, force) {
     this.dx += x * force / this.mass;
     this.dy += y * force / this.mass;
-    if (this.dx > this.terminalVelocity)
-      this.dx = this.terminalVelocity;
-    if (this.dy > this.terminalVelocity)
-      this.dy = this.terminalVelocity;
-    if (this.dx < -this.terminalVelocity)
-      this.dx = -this.terminalVelocity;
-    if (this.dy < -this.terminalVelocity)
-      this.dy = -this.terminalVelocity;
+    const speed = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
+    if (speed > this.terminalVelocity) {
+      this.dx *= this.terminalVelocity / speed;
+      this.dy *= this.terminalVelocity / speed;
+    }
   }
   //Update the location of the particle, based on the current velocity vector
   move() {
@@ -83,6 +80,7 @@ class Particles {
     this.particles = (paramsObject.particles) ? paramsObject.particles : [];
     this.connected = paramsObject.connected || false;
     this.latticeDistance = (paramsObject.latticeDistance) ? paramsObject.latticeDistance : 250;
+    this.latticeWidth = (paramsObject.latticeWidth) ? paramsObject.latticeWidth : 5;
 
     this.debug = paramsObject.debug || false; //Debug mode
     this.frameTime = paramsObject.frameTime || false; //Frame-time overlay
@@ -92,6 +90,7 @@ class Particles {
       x: 0,
       y: 0,
     };
+    this.random = paramsObject.random;
     this.clicked = false;
     this.timeClicked = undefined;
 
@@ -209,7 +208,7 @@ class Particles {
     brush.font = `${11 * window.devicePixelRatio}px arial`;
     //Draw lattice, if specified
     if (this.connected) {
-      brush.lineWidth = 5;
+      brush.lineWidth = this.latticeWidth;
       let distance, particleA, particleB, alpha
       for (var indexA = 0; indexA < this.particles.length; indexA++) {
         particleA = this.particles[indexA];
@@ -409,6 +408,28 @@ class Particles {
     }
     this.addParticles(newParticles);
   }
+
+  exportConfigs() {
+    const outputConfig = {
+      walled: this.walled,
+      teleportWalls: this.teleportWalls,
+      gravity: this.gravity,
+      falling: this.falling,
+      particleColor: this.particleColor,
+      terminalVelocity: this.terminalVelocity,
+      connected: this.connected,
+      latticeDistance: this.latticeDistance,
+      latticeWidth: this.latticeWidth,
+      interactive: this.interactive,
+      clickToAdd: this.clickToAdd,
+      repel: this.repel,
+      random: this.random,
+      debug: this.debug,
+      frameTime: this.frameTime,
+    };
+    return outputConfig;
+  }
+
   //Some default configs that can be used
   static configs() {
     return {
@@ -462,6 +483,7 @@ class Particles {
         interactive: true,
         repel: true,
         latticeDistance: 400,
+        latticeWidth: 5,
         clickToAdd: false,
         particleColor: "rgb(255,255,255)",
         connected: true,
