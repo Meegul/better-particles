@@ -10,25 +10,62 @@ html body {
 }
 
 .wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
+    
 }
 
 .settings {
+    position: absolute;
+    left: calc(100% - 21em);
     display: flex;
     flex-direction: column;
-    align-content: center;
-    flex: 1 0 auto;
+    align-content: flex-start;
+    flex: 1 1 10em;
+    margin: 0px 5px;
+    width: 20em;
+}
+
+.settings input {
+    text-align: right;
 }
 
 .setting {
-    display: inline-block;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2px 2px;
+}
+
+.disabled {
+    background: lightgray;
+    color: gray;
+}
+
+.json {
+    background: lightgray;
+    font-family: monospace;
+    min-width: 0;
+    width: 100%;
+    word-wrap: break-word;
+    text-align: left;
+    margin: 2px 2px;
 }
 
 #particles-canvas {
-    flex: 1 0 auto;
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 22em);
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: fixed;
     background: black;
+}
+
+h2 {
+    margin: 5px 2px;
+}
+
+button {
+    text-align: center;
 }

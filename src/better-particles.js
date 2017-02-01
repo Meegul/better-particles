@@ -93,6 +93,7 @@ class Particles {
       x: 0,
       y: 0,
     };
+    this.random = paramsObject.random;
     this.clicked = false;
     this.timeClicked = undefined;
 
@@ -410,6 +411,28 @@ class Particles {
     }
     this.addParticles(newParticles);
   }
+
+  exportConfigs() {
+    const outputConfig = {
+      walled: this.walled,
+      teleportWalls: this.teleportWalls,
+      gravity: this.gravity,
+      falling: this.falling,
+      particleColor: this.particleColor,
+      terminalVelocity: this.terminalVelocity,
+      connected: this.connected,
+      latticeDistance: this.latticeDistance,
+      latticeWidth: this.latticeWidth,
+      interactive: this.interactive,
+      clickToAdd: this.clickToAdd,
+      repel: this.repel,
+      random: this.random,
+      debug: this.debug,
+      frameTime: this.frameTime,
+    };
+    return outputConfig;
+  }
+
   //Some default configs that can be used
   static configs() {
     return {

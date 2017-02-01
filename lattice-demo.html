@@ -6,18 +6,94 @@
     <div class="wrapper">
         <canvas id="particles-canvas">No canvas!</canvas>
         <div class="settings">
+            <h2>General Settings</h2>
+            <div class="setting" onclick="updateConnected()">
+                <a>Connected: </a>
+                <input id="connected" type="checkbox" value="connected" checked>
+            </div>
             <div class="setting" oninput="updateLatticeWidth()">
                 <a>Lattice Width: </a>
                 <input id="lattice-width" type="number" value="5" min="0">
             </div>
             <div class="setting" oninput="updateLatticeDistance()">
                 <a>Lattice Distance: </a>
-                <input id="lattice-distance" type="number" value="200" min="0">
+                <input id="lattice-distance" type="number" value="400" min="0">
             </div>
             <div class="setting" onclick="updateGravity()">
                 <a>Gravity: </a>
                 <input id="gravity" type="checkbox" value="gravity">
             </div>
+            <div class="setting" onclick="updateFalling()">
+                <a>Falling: </a>
+                <input id="falling" type="checkbox" value="falling">
+            </div>
+            <div class="setting" onclick="updateDebug()">
+                <a>Debug Mode: </a>
+                <input id="debug" type="checkbox" value="debug">
+            </div>
+            <div class="setting" onclick="updateFrameTime()">
+                <a>Frame-time Counter: </a>
+                <input id="frame-time" type="checkbox" value="frameTime">
+            </div>
+            <div class="setting" onclick="updateInteractive()">
+                <a>Interactive: </a>
+                <input id="interactive" type="checkbox" value="Interactive" checked>
+            </div>
+            <div class="setting" onclick="updateRepel()">
+                <a>Repel: </a>
+                <input id="repel" type="checkbox" value="repel" checked>
+            </div>
+            <div class="setting" onclick="updateClickToAdd()">
+                <a>Click to add new particles: </a>
+                <input id="click-to-add" type="checkbox" value="clickToAdd">
+            </div>
+            <div class="setting" oninput="updateTerminalVelocity()">
+                <a>Terminal Velocity: </a>
+                <input id="terminal-velocity" type="number" min="0" value="0.5">
+            </div>
+            <h2>Starting Particle Configs</h2>
+            <div class="setting" oninput="updateNumber()">
+                <a># </a>
+                <input id="number" type="number" min="1" value="75">
+            </div>
+            <div class="setting" oninput="updateParticleColor()">
+                <a>Color: </a>
+                <input id="particleColor" type="text" value="rgb(255,255,255)">
+            </div>
+            <div class="setting" oninput="updateMinMass()">
+                <a>Min Mass: </a>
+                <input id="min-mass" type="number" min="0" value="0.5">
+            </div>
+            <div class="setting" oninput="updateMaxMass()">
+                <a>Max Mass: </a>
+                <input id="max-mass" type="number" min="0" value="0.5">
+            </div>
+            <div class="setting" oninput="updateMinDx()">
+                <a>Min dx: </a>
+                <input id="min-dx" type="number" value="-0.5">
+            </div>
+            <div class="setting" oninput="updateMaxDx()">
+                <a>Max dx: </a>
+                <input id="max-dx" type="number" value="0.5">
+            </div>
+            <div class="setting" oninput="updateMinDy()">
+                <a>Min dy: </a>
+                <input id="min-dy" type="number" value="-0.5">
+            </div>
+            <div class="setting" oninput="updateMaxDy()">
+                <a>Max dy: </a>
+                <input id="max-dy" type="number" value="0.5">
+            </div>
+            <h2>Export</h2>
+            <div class="setting">
+                <a>Restart with current config: </a>
+                <button onclick="restart()">Restart</button>
+            </div>
+            <div class="setting">
+                <a>Output config to JSON</a>
+                <button onclick="outputConfigs()">Output</button>
+            </div>
+            <p class="json" id="config-output">JSON output</p>
         </div>
     </div>
     <script src="src/better-particles.js"></script>
