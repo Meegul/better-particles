@@ -8,7 +8,7 @@
         <div class="button" onclick="particles.clear()">Clear Particles</div>
         <div class="button" onclick="particles.toggleDebug()">Toggle Debug Mode</div>
         <div class="button" onclick="particles.toggleFrameTime()">Toggle Frame-time Counter</div>
-        <div class="button" onclick="particles.toggleInteractivity()">Toggle Interactivity</div>
+        <div class="button" onclick="(()=>{particles.toggleInteractivity(); particles.clickToAdd = particles.interactive;})()">Toggle Interactivity</div>
         <div class="button" onclick="blackHole()">Black Hole</div>
         <div class="button" onclick="solarSystem()">Solar System</div>
         <div class="button" onclick="lattice()">Lattice</div>
