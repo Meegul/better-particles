@@ -110,6 +110,11 @@ function updateNumber() {
     particleObject.random.number = number;
 }
 
+function updateParticleColor() {
+    const color = document.getElementById("particleColor").value;
+    particleObject.random.color = color;
+}
+
 function updateMinMass() {
     const minMass = parseInt(document.getElementById("min-mass").value);
     particleObject.random.minMass = minMass;
